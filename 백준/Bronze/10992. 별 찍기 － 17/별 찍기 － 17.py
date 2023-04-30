@@ -9,9 +9,7 @@ for i in range(1,m+1):
     elif(i==m):
         print("*"*(k+2))
     else:
-        print("*",end="")
-        print(" "*k,end="")
-        print("*")
+        print("*"+" "*k+"*")
         k+=2
 
 
