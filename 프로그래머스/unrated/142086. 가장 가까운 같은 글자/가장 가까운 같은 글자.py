@@ -1,13 +1,13 @@
 def solution(s):
-    answer = []
-    d = {a:-1 for a in s}
+    answer=[]
+    
+    d = {}
     
     for i in range(len(s)):
-        if(d[s[i]]==-1):
+        if(s[i] not in d):
             answer.append(-1)
         else:
-            print(d[s[i]])
             answer.append(i-d[s[i]])
         d[s[i]]=i
- 
+    
     return answer
