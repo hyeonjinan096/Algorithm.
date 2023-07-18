@@ -6,8 +6,10 @@ function solution(s){
         i === "(" ? stack++ : stack--;
         if(stack<0){return false;}
     }
-    if(stack != 0){return false;}
-    else{return true;}
+    return stack ==0 ? true : false;
+    
+    //if(stack == 0){return true;}
+    //else{return false;} 왜 true가 앞이면 시간초과인지 모르겠음;;
     
     
 }
