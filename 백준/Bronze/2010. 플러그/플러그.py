@@ -1,9 +1,9 @@
 import sys
 
-num = int(sys.stdin.readline())
+n = int(sys.stdin.readline())
 sum = 1
-for i in range(num):
-    tempNum = int(sys.stdin.readline())
-    sum+=tempNum
+for i in range(n):
+    y = int(sys.stdin.readline())
+    sum=sum +y
 
-print(sum-num)
+print(sum-n)
