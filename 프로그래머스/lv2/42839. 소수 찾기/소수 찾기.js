@@ -1,8 +1,10 @@
 function solution(numbers) {
     var answer = 0;
-    
+    let set = new Set();
+    let visited = Array(numbers.length).fill(0);
+  
     let Num = Array.from(numbers);
-    Num =Num.map((e)=>parseInt(e))
+    Num =Num.map((e)=>parseInt(e)) //문자열-> 숫자 배열로 변환
     
     function check(n){
         let k = n>4 ? n/2 : n;
@@ -13,20 +15,14 @@ function solution(numbers) {
         return 1;
     }
     
-    let set = new Set();
-    let visited = Array(numbers.length).fill(0);
-    
     
     function dfs(num,y){
-        //console.log(num);
         if(!set.has(num)){
             if(check(num)){
-                //console.log(num+"소수");
                 answer++;}
             set.add(num);}
         for(let i in Num){
             if(visited[i]==0){
-                //console.log(Num[i]+'방문 안함')
                 visited[i] =1;
                 dfs(num+(y*10)*Num[i],y*10);
                 visited[i] =0;
@@ -41,7 +37,5 @@ function solution(numbers) {
         visited[i] = 0;
     }
     
-    console.log(set);
     return answer;
 }
-console.log(solution("1234"));
