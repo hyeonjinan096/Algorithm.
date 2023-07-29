@@ -3,12 +3,14 @@ function solution(numbers) {
     let set = new Set();
     let visited = Array(numbers.length).fill(0);
   
+    
+    
     let Num = Array.from(numbers);
     Num =Num.map((e)=>parseInt(e)) //문자열-> 숫자 배열로 변환
     
     function check(n){
-        let k = n>4 ? n/2 : n;
-        for(let i =2 ;i<k ;i++){
+        //let k = n>2 ? n/2 : n;
+        for(let i =2 ;i<=Math.sqrt(n) ;i++){
             if(n%i ==0){return 0;}
         }
         if(n ==1 ||n==0){return 0;}
