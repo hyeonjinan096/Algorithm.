@@ -1,21 +1,14 @@
 function solution(clothes) {
-    var answer = 1;
-    let c =[];
-    let N;
+    var answer = 0;
+    let object = {};
     
-    for (let i of clothes){
-        if(!c[i[1]]){
-            c[i[1]] =1;
-        }
-        else{
-            c[i[1]] +=1;
-        }
+    for(let i of clothes){
+        object[i[1]] = (object[i[1]]||0)+1;
     }
-    console.log(c);
- 
-    for(let i in c){ //object는 of 사용 안됨
-        //console.log(i);
-        answer *= (c[i]+1);       
+    let sum=1;
+    for(let i in object){
+        sum *=(object[i]+1)
     }
-    return answer-1;
+    
+    return sum-1;
 }
