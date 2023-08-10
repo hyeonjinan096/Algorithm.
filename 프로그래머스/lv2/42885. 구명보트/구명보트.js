@@ -1,13 +1,24 @@
 function solution(people, limit) {
+    var answer = 0;
+    p=people.sort((a,b)=>a-b);
     
-    people.sort((a,b)=>b-a);
-    let count =0;
-    
-    for(let i in people){
-        if(people.at(-1) + people[i]<= limit){
-            people.pop();
+    for(let i=0;i<p.length;i++){
+        for(let j=p.length-1;j>=i;j--){
+            if(i==j){
+                answer++;
+            }
+            else if(p[i] +p[j] > limit){
+                answer++;
+                p.pop();
+            }
+            else{
+                answer++;
+                p.pop();
+                break;
+            }
+            
         }
-        count++;
     }
-    return count;
+    
+    return answer;
 }
