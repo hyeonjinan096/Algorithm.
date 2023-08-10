@@ -1,27 +1,32 @@
 function solution(s) {
     var answer = 0;
-    let arr =s+s;
-    let k ;
-
-    function check(a){
-        let stack=[];
-        for(let i of a){
-            if(i == '[' ||i =='('||i =='{'){stack.push(i);}
-            else{
-                k = stack.pop();
-                if(i ==']' &&k!='['){return false; }
-                else if(i ==')'&&k!='('){return false;}
-                else if(i =='}'&&k!='{'){return false;}
+    let q =[];
+    let S = s+s;
+    let l = s.length;
+    function check(s) {
+        for(let i of s){
+            if(i =="("||i=="["||i=="{"){
+                if(i == "("){q.push(')');}
+                else if(i == "["){q.push("]");}
+                else if(i == "{"){q.push("}");}
+            }
+            else if(q.pop() != i ){
+                return false
             }
         }
-        if(stack.length!=0){return false;}
-        else{return true;}
+        if(q.length!=0){//q에 뭐가 있다
+            return false
+        }
+        else{console.log("a");return true;}
     }
     
     for(let i in s){
-        let new_s = arr.substr(i,s.length);
-        if(check(new_s)){answer++;}
+        
+        check(S.substr(i,l)) ? answer++ : 0;
+       
     }
+    
+    
     
     return answer;
 }
