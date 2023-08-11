@@ -1,13 +1,10 @@
-function solution(n){
-	var answer = []
-    for(var i=0; i<=n; i++){
-      if(i==0) answer.push(0)
-      if(i==1) answer.push(1)
-      if(i>=2){
-        var sum = answer[i-1] + answer[i-2]
-      	answer.push(sum % 1234567)
-      }
+function solution(n) {
+    var answer = 0;
+    let li=new Array(n+1).fill(0);
+    li[0] = 0;
+    li[1] = 1;
+    for(let i=2;i<=n;i++){
+        li[i] = li[i-1]%1234567+li[i-2]%1234567;
     }
-  var result = answer[n]
-  return result 
+    return li[n] %1234567;
 }
