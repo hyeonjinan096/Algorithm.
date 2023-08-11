@@ -1,19 +1,23 @@
 function solution(k, dungeons) {
-    var answer = [];
-    let visited =Array(dungeons.length).fill(0);
+    var answer = 0;
+    let d = dungeons;
+    let visited = new Array(dungeons.length).fill(0);
+    let c = 0;
     
-    function dfs(k,result){
-        answer =answer<result? result : answer;
-        for(let i in dungeons){
-            if(visited[i]==0 && k >= dungeons[i][0]){
-                visited[i] = 1;
-                dfs(k-dungeons[i][1],result+1)
+    function dfs(K,c){
+        answer = answer < c ? c : answer;
+        for(let i in d){
+            if(visited[i]==0 && K >= d[i][0]){
+                visited[i] =1;
+                dfs(K-d[i][1],c+1);
                 visited[i] =0;
             }
-            
         }
-        return answer;
+        return;
     }
+  
     
-    return (dfs(k,0));
+    dfs(k,0);
+   
+    return  answer;
 }
