@@ -1,19 +1,13 @@
 function solution(progresses, speeds) {
     var answer = [];
-    let li =[];
-    let day ;
-    for(let i in speeds){
-        day = (100-progresses[i])/speeds[i];
-        if(parseInt(day) != day){day = parseInt(day)+1;}
-        li.push(day); 
+    let arr =progresses.map((e,i)=>Math.ceil((100-e)/speeds[i]));
+    let m=0;
+    let c=0;
+    for(let i of arr){
+        if(m==0){m = i;}
+        else if(m<i){answer.push(c); c=0; m =i;}
+        c++;
     }
-    console.log(li);
-    let min =li[0];
-    let sum =0;
-    for(let i of li){
-        if(min<i){answer.push(sum);sum =0;min =i;}
-        sum++;
-    }
-    answer.push(sum);
+    answer.push(c);
     return answer;
 }
