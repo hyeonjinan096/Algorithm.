@@ -1,14 +1,13 @@
 function solution(priorities, location) {
     var answer = 0;
-    let q1 = priorities;
+    let q1 = [...priorities];
     let q2 = [];
-    let p;
-    let l;
-    let count =0;
-    for(let i in q1){
+    for(let i in priorities){
         q2.push(i);
     }
-    
+    let p;
+    let l;
+    let c=0;
     while(q1){
         p = q1.shift();
         l = q2.shift();
@@ -17,11 +16,12 @@ function solution(priorities, location) {
             q2.push(l);
         }
         else{
-            count++;
+            c++;
             if(l == location){
-                return count;
+                return c;
             }
         }
     }
-    return answer;
+    
+    return c;
 }
