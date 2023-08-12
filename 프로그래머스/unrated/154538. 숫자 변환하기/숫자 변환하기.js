@@ -1,13 +1,12 @@
 function solution(x, y, n) {
     var answer = 0;
-    let dp = Array(y+1).fill(Infinity);
-    dp[x] = 0;
-    
-    for(let i=x;i<y+1;i++){
-        dp[i+n] = Math.min(dp[i+n],dp[i]+1);
-        dp[i*2] = Math.min(dp[i*2],dp[i]+1);
-        dp[i*3] = Math.min(dp[i*3],dp[i]+1);
+    let li = new Array(y+1).fill(Infinity);
+    li[x] = 0;
+    for(let i = x;i<=y;i++ ){
+        li[i+n] = li[i+n]>li[i]+1 ? li[i]+1:li[i+n];
+        li[i*2] = li[i*2]>li[i]*2 ? li[i]+1:li[i*2];
+        li[i*3] = li[i*3]>li[i]*3 ? li[i]+1:li[i*3];
     }
     
-    return dp[y] == Infinity ? -1:dp[y];
+    return li[y]!=Infinity?li[y]:-1;
 }
