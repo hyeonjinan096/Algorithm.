@@ -1,23 +1,17 @@
 function solution(want, number, discount) {
     var answer = 0;
-    let day = number.reduce((s,c)=>s+c,0)
-    let li;
-    let N  = number;
+    let arr =[];
+    let N ;
     for(let i=0;i<discount.length;i++){
-        li = discount.slice(i,i+day);
-        N  = number.map((e)=>e);
-        for(let j =0;j<want.length;j++){
-            while(li.includes(want[j])){
-                li[li.indexOf(want[j])] = "";
+        arr = discount.slice(i,i+10);
+        N = [...number]
+        for(let j in want){
+            while(arr.includes(want[j])){
                 N[j]--;
+                arr[arr.indexOf(want[j])] = 0;
             }
         }
-        N.sort((a,b)=>b-a);
-        if(N[0]<=0){
-            answer++;
-        }
-    
+        if(Math.max(...N)<=0){answer++;}
     }
-    
     return answer;
 }
