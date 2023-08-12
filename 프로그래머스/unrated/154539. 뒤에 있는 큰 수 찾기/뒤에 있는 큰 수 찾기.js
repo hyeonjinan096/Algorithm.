@@ -1,13 +1,15 @@
 function solution(numbers) {
-    let answer = Array(numbers.length).fill(-1);
-    let stack = [];
-    
-    for(let i in numbers){
-        while(numbers[stack.at(-1)]<numbers[i]){
-            answer[stack.pop()] =numbers[i];
+    let N = numbers;
+    var answer = new Array(N.length).fill(0);
+    let q=[];
+    for(let i in N){
+        while(N[i] > N[q.at(-1)]){
+            answer[q.at(-1)] = N[i];
+            q.pop();
         }
-        stack.push(i);
+        q.push(i);
     }
+    answer = answer.map((e)=>{if(e==0){return -1;}else{return e}})
     
     return answer;
 }
