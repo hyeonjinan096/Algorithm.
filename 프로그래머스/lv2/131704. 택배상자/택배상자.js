@@ -1,21 +1,24 @@
 function solution(order) {
     var answer = 0;
-    let q = [];
-    let n =0;
-    let li = order.map((a)=>{n++; return n;})
-    let j =0;
-    
+    let box = [];
+    let box2 =[];
+    let idx =0;
+    for(let i in order){
+        box.push(Number(i)+1);
+    }
+    let a;
     for(let i of order){
-        
-        if(i == q[q.length-1]){ q.pop(); answer++; continue;}
-        while(li[j]<i){
-            q.push(li[j]);j++;
+        if(box2.at(-1) == i ){
+            answer++;
+            box2.pop();
+            continue;
         }
-        if(li[j] == i){li[j]; j++; answer++;}
+        while(box[idx]<i){
+            box2.push(box[idx]);
+            idx++;
+        }
+        if(box[idx] == i){idx++; answer++;}
         else{return answer;}
-        
     }
     return answer;
 }
-//at[-1]알아보기
-//시간초과
