@@ -1,15 +1,16 @@
 function solution(numbers, target) {
     var answer = 0;
-    let arr = [];
     
-    function dfs(k,i){
+    function dfs(i,n){
         if(i == numbers.length){
-            if(k == target){answer++;}
+            if(n == target){answer++;}
             return;
         }
-        dfs(k-numbers[i],i+1);
-        dfs(k+numbers[i],i+1);
+        dfs(i+1,n+numbers[i]);
+        dfs(i+1,n-numbers[i])
+        return;
     }
+    
     dfs(0,0);
     return answer;
 }
