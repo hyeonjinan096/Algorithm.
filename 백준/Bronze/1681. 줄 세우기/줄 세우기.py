@@ -1,11 +1,12 @@
 N,l = list(map(int,input().split(' ')))
-
+l = str(l)
 num = 1
-cnt = 0	
+C = 0	
+
 while True:
     if str(l) not in str(num): 
-        cnt+=1	
-        if cnt == N:
+        C+=1	
+        if C == N:
             print(num)
             break
         num+=1
