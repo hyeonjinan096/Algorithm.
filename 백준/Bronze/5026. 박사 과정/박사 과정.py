@@ -1,9 +1,9 @@
 n = int(input())
 
-for _ in range(n) :
-  data = input()
-  if data == 'P=NP' :
-    print('skipped')
+for i in range(n) :
+  m = input()
+  if m == "P=NP" : 
+    print("skipped")
   else :
-    a, b = map(int, data.split('+'))
+    a, b = map(int, m.split('+'))
     print(a + b)
