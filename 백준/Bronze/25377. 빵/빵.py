@@ -1,13 +1,16 @@
-from sys import stdin
-n = int(stdin.readline().strip())
-k = 1001
-for i in range(n):
-    a, b = map(int, stdin.readline().split())
-    if b>=a:
-        if b<k:
-            k = b
-if k != 1001:
-    print(k)
-else:
+N = int(input())
+
+MAX = 10000
+result = MAX
+for _ in range(N):
+    arrival_time, open_time = map(int, input().split())
+    if open_time < arrival_time:
+        continue
+
+    if open_time < result:
+        result = open_time
+
+if result == MAX:
     print(-1)
-    print(k)
+else:
+    print(result)
