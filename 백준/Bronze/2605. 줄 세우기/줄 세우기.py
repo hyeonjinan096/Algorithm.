@@ -1,12 +1,10 @@
-N = int(input())
-arr = list(map(int, input().split()))
-li = []
+import sys
+read = sys.stdin.readline
 
-for i in range(N):
-    if i == 0:
-        li.insert(0, i+1)
-    else:
-        li.insert(arr[i], i+1)
+N = int(read())
+A = list(map(int, read().split()))
+ans = []
 
-for i in reversed(li):
-    print(i, end=" ")
+for i,v in enumerate(A):
+    ans.insert(v, i+1)
+print(*reversed(ans))
