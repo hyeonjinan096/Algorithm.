@@ -1,14 +1,12 @@
 import sys
-input = sys.stdin.readline
 N = int(input())
-board = [list(map(int,input().split())) for _ in range(N)]
+board = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
 visited = [False for _ in range(N)]
-INF = 2147000000
-res = INF
+result = float('inf')
 
-def DFS(L,idx):
-    global res
-    if L == N//2:
+def DFS(level, idx):
+    global result
+    if level == N/2:
         A = 0
         B = 0
         for i in range(N):
@@ -16,14 +14,16 @@ def DFS(L,idx):
                 if visited[i] and visited[j]:
                     A += board[i][j]
                 elif not visited[i] and not visited[j]:
-                    B +=board[i][j]
-        res = min(res, abs(A-B))
+                    B += board[i][j]
+        result = min(result,abs(A-B))
         return
-    for i in range(idx,N):
+    for i in range(idx, N):
         if not visited[i]:
             visited[i] = True
-            DFS(L+1,i+1)
+            DFS(level+1, i+1)
             visited[i] = False
-            
+
+
+
 DFS(0,0)
-print(res)
+print(result)
