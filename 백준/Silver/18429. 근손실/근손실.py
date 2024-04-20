@@ -1,27 +1,17 @@
-import sys
-from collections import deque
-
-N, K = map(int, sys.stdin.readline().split())
-table = list(map(int, sys.stdin.readline().split()))
-visited = [0] * N
-result = 0
-
-def find(x,n):
-    global result
-    if x < 500:
-        return
-    if n == N :
-        result += 1
-        return 
-    x -= K
-
+def dfs(depth, t):
+    global cnt
+    if depth == N:
+        cnt += 1
+        return ;
     for i in range(N):
-        if not visited[i]:
-            visited[i] = 1
-            find(x+table[i], n+1)
-            visited[i] = 0
-
-find(500, 0)
-print(result)
-
-
+        if check[i] or t+nums[i]-K < 0:
+            continue
+        check[i] = 1
+        dfs(depth+1, t+nums[i]-K)
+        check[i] = 0
+        
+N, K = map(int, input().split())
+nums = list(map(int, input().split()))
+check, cnt = [0]*N, 0
+dfs(0, 0)
+print(cnt)
