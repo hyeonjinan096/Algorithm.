@@ -1,19 +1,17 @@
+from itertools import product
 import sys
-a, b = map(int, sys.stdin.readline().split())
 
-count = 0
+a,b = map(int,sys.stdin.readline().split())
+x = len(str(a))
+y = len(str(b))
 
-def dfs(N):
-    global count
-    if(a<= N <=b):
-        count+=1
-    for i in [4,7]:
-        current_N = N*10 + i
-        if(current_N <=b):
-            dfs(current_N)
-            
+count =0
 
-dfs(4)
-dfs(7)
+for i in range(x, y+1):
+    num_list = list(product([4,7],repeat=i))
+    for num in num_list:
+        number = int("".join(map(str,num)))
+        if a<= number<=b:
+            count+=1
 
 print(count)
