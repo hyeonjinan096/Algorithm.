@@ -1,34 +1,27 @@
-import sys
 from collections import deque
 
-r,c = map(int, sys.stdin.readline().strip().split())
-
-graph = []
-visited=[[False]*c for _ in range(r)]
-for i in range(r):
-    graph.append(list(map(int,sys.stdin.readline().strip())))
-
+n, m = map(int, input().split())
+graph = [list(map(int, input())) for _ in range(n)]
+visited = [[0] * m for _ in range(n)]
 
 dx = [1,-1,0,0]
 dy = [0,0,1,-1]
+cnt = 0
 
-visited[0][0]=True
-q=deque()
-q.append((0,0,1))
-f=0
-while(q):
-    cx,cy,count = q.popleft()
-    for i in range(4):
-        nx =cx+dx[i]
-        ny = cy+dy[i]
-        if(nx>=0 and nx < r and ny>=0 and ny <c):
-            if(graph[nx][ny]==1 and not visited[nx][ny]):
-                if(nx == r-1 and ny ==c-1):
-                    print(count+1)
-                    f=1
-                    break
-                visited[nx][ny]=True
-                q.append((nx,ny,count+1))
-    if(f==1):
-        break
+def bfs(x, y):
+    q = deque([(x,y)])
+    visited[x][y] = 1
 
+    while q:
+        x, y = q.popleft()
+        for i in range(4):
+            nx, ny = x + dx[i], y + dy[i]
+			
+            # if문 하나에서 여러 조건을 확인하는 것 보다 아래처럼 쪼개는 것이 속도가 빠름
+            if 0<=nx<n and 0<=ny<m and graph[nx][ny]==1: 
+                if visited[nx][ny] == 0:
+                    q.append((nx, ny))
+                    visited[nx][ny] = visited[x][y] + 1
+    return
+bfs(0,0)
+print(visited[n-1][m-1])
