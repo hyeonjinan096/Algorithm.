@@ -1,24 +1,19 @@
-import sys
-from collections import deque
+a,b = map(int, input().split())
 
-n,b = map(int,sys.stdin.readline().split())
-q= deque()
-q.append([n,1])
+answer = []
 
-f=0
-while(q):
-    k=q[0]
-    if(k[0]==b):
-        print(k[1])
-        f=1
-        break
-    else:
-        q.popleft()
-        if(k[0]*2<=b):
-            q.append([k[0]*2,k[1]+1])
-        if(k[0]*10+1<=b):
-            q.append([k[0]*10+1,k[1]+1])
-if(f==0):
+def dfs(cur_v,l):
+    global answer
+    if cur_v > b:
+        return
+    if cur_v == b:
+        answer.append(l)
+        return
+    dfs(cur_v*2,l+1)
+    dfs(cur_v*10+1,l+1)
+
+dfs(a,1)
+if len(answer) ==0:
     print(-1)
-
-
+else:
+    print(min(answer))
