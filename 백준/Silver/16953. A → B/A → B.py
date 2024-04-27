@@ -1,6 +1,6 @@
 a,b = map(int, input().split())
 
-answer = 0
+answer = -1
 
 def dfs(cur_v,l):
     global answer
@@ -14,4 +14,4 @@ def dfs(cur_v,l):
 
 dfs(a,1)
 
-print(answer or -1)
+print(answer)
