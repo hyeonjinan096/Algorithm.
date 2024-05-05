@@ -4,7 +4,7 @@
 # 표준 입력 예제
 '''
 a = int(input())                        정수형 변수 1개 입력 받는 예제
-b, c = map(int, input().split())        정수형 변수 2개 입력 받는 예제
+b, c = map(int, input().split())        정수형 변수 2개 입력 받는 예제 
 d = float(input())                      실수형 변수 1개 입력 받는 예제
 e, f, g = map(float, input().split())   실수형 변수 3개 입력 받는 예제
 h = input()                             문자열 변수 1개 입력 받는 예제
@@ -37,20 +37,17 @@ print(f)                                문자열 1개 출력하는 예제
 #sys.stdin = open("input.txt", "r")
 
 T = 10
-dx =[-1,-2,1,2]
 # 여러개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
 for test_case in range(1, T + 1):
     n = int(input())
     values = list(map(int,input().split()))
-    answer = 0
-
-    for i in range(2, len(values)-1):
-        d = float('inf')
-        for j in range(4):
-            x = values[i] - values[i+dx[j]]
-            if x < 0:
-                d = 0
-                break
-            d = min(d,x)
-        answer+=d
+    answer=0
+    for i in range(2,n-2):
+        m=300
+        for j in [-2,-1,1,2]:
+            v = values[i]-values[i+j]
+            m = min(m,v)
+        if m > 0 :
+            answer += m
     print(f'#{test_case} {answer}')
+
