@@ -41,6 +41,8 @@ def dfs(i,c,s):
     global answer
     if c<=C:
         answer = max(answer,s)
+    else: 
+        return
     for j in range(i+1,n):
         dfs(j,c+lst[j][1],s+lst[j][0])
 
