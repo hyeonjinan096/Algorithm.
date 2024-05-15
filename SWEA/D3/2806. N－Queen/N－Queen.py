@@ -36,31 +36,36 @@ print(f)                                문자열 1개 출력하는 예제
 #import sys
 #sys.stdin = open("input.txt", "r")
 
-def dfs(n):
+def dfs(y, x):
     global answer
-    if n ==N:
-        answer +=1
-    for i in range(N):
-        f=0
-        for j in visited:
-            x,y = j
-            if y == i:
-                f=1
-                break
-            if x+y == n+i or x-y == n-i: #깉은 대각선
-                f=1
-                break
-        if f==0:
-            visited.append((n,i))
-            dfs(n+1)
-            visited.pop()
-
+    if x == n-1:
+        answer+=1
+        return
+    for i in range(n):
+        cx = x+1
+        if i not in vy and cx-i not in vr and cx+i not in vl:
+            vy.append(i)
+            vl.append(cx+i)
+            vr.append(cx-i)
+            dfs(i, cx)
+            vy.pop()
+            vl.pop()
+            vr.pop()
 T = int(input())
 # 여러개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
 for test_case in range(1, T + 1):
-    N = int(input())
-    graph = [[0]*N for _ in range(N)]
-    answer =0
-    visited =[]
-    dfs(0)
+    n = int(input())
+    answer = 0
+    vy = []
+    vl = []
+    vr =[]
+
+    for i in range(n):
+        vy.append(i)
+        vl.append(i)
+        vr.append(-i)
+        dfs(i,0)
+        vy.pop()
+        vl.pop()
+        vr.pop()
     print(f'#{test_case} {answer}')
