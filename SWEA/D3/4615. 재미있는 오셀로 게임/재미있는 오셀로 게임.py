@@ -23,6 +23,7 @@ print(f)                                문자열 1개 출력하는 예제
 
 
 
+
 '''
       아래의 구문은 input.txt 를 read only 형식으로 연 후,
       앞으로 표준 입력(키보드) 대신 input.txt 파일로부터 읽어오겠다는 의미의 코드입니다.
@@ -36,41 +37,37 @@ print(f)                                문자열 1개 출력하는 예제
 '''
 #sys.stdin = open("input.txt", "r")
 
+dr = [(1,1),(-1,-1),(1,0),(0,1),(-1,0),(0,-1),(-1,1),(1,-1)]
+
 T = int(input())
-k = [(-1,0),(1,0),(0,1),(0,-1),(-1,1),(1,-1),(-1,-1),(1,1)]
-
-def check(x,y):
-    global graph
-
 # 여러개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
 for test_case in range(1, T + 1):
     n,m = map(int,input().split())
     graph = [[0]*n for _ in range(n)]
-    M =n//2
-    graph[M][M]=graph[M-1][M-1] =2
-    graph[M-1][M]=graph[M][M-1] =1
+    graph[n//2-1][n//2-1] = graph[n//2][n//2] = 2
+    graph[n//2-1][n//2] = graph[n//2][n//2-1] = 1
+
     for i in range(m):
         x,y,d = map(int,input().split())
-        x-=1
-        y-=1
-        graph[x][y] = d
-        for j in k:
-            dx = x+j[0]
-            dy = y+j[1]
-            p =[]
-            while 0<=dx<n and 0<=dy<n and graph[dx][dy] != 0:
-                if graph[dx][dy] !=d:
-                    p.append((dx,dy))
-                    dx+=j[0]
-                    dy+=j[1]
-                else:
-                    for z in p:
-                        graph[z[0]][z[1]] = d
+        graph[x-1][y-1] = d
+        for j in range(8):
+            cx, cy = x-1, y-1
+            arr =[]
+            while(0<=cx + dr[j][0]<n and 0<=cy + dr[j][1]<n):
+                cx = cx + dr[j][0]
+                cy = cy + dr[j][1]
+                if graph[cx][cy] !=d and graph[cx][cy] != 0:
+                    arr.append((cx,cy))
+                elif graph[cx][cy] == d:
+                    for p in arr:
+                        graph[p[0]][p[1]] = d
                     break
-    white =0
-    black =0
+                else:
+                    break
+
+    wc=0
+    bc=0
     for i in graph:
-        for j in i:
-            if j == 2: white+=1
-            if j == 1: black+=1
-    print(f'#{test_case} {black} {white}')
+        wc+=i.count(2)
+        bc+=i.count(1)
+    print('#{} {} {}'.format(test_case,bc,wc))
