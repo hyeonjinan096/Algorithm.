@@ -40,19 +40,15 @@ T = int(input())
 # 여러개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
 for test_case in range(1, T + 1):
     n = int(input())
-    graph = [list(map(int,str(input()))) for _ in range(n)]
-    answer = 0
-    si,ei = n//2+1,n//2-1
-    for i in range(0,n//2+1):
-        si-=1
-        ei+=1
-        for j in range(si,ei+1):
-            answer+=graph[i][j]
+    graph = [list(map(int,input())) for _ in range(n)]
 
-    for i in range(n//2+1,n):
-        si+=1
-        ei-=1
-        for j in range(si,ei+1):
-            answer+=graph[i][j]
+    s = n//2+1
+    e = n//2-1
+    answer =0
+    for i in range(n):
+        if i <= n//2:
+            s,e = s-1,e+1
+        else:
+            s,e = s+1,e-1
+        answer+=sum(graph[i][s:e+1])
     print(f'#{test_case} {answer}')
-
