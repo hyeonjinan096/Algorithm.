@@ -4,7 +4,7 @@
 # 표준 입력 예제
 '''
 a = int(input())                        정수형 변수 1개 입력 받는 예제
-b, c = map(int, input().split())        정수형 변수 2개 입력 받는 예제 
+b, c = map(int, input().split())        정수형 변수 2개 입력 받는 예제
 d = float(input())                      실수형 변수 1개 입력 받는 예제
 e, f, g = map(float, input().split())   실수형 변수 3개 입력 받는 예제
 h = input()                             문자열 변수 1개 입력 받는 예제
@@ -41,14 +41,16 @@ T = 10
 for test_case in range(1, T + 1):
     n = int(input())
     graph = [list(map(int,input().split())) for _ in range(100)]
-    s1 =0
-    s2 = [0]*100
-    s3 =0
-    s4=0
+
+    x_sum =0
+    y_sum =[0]*100
+    r_sum =0
+    l_sum =0
     for i in range(100):
-        s1=max(sum(graph[i]),s1)
+        x_sum = max(sum(graph[i]), x_sum)
         for j in range(100):
-            s2[i]+=graph[j][i]
-        s3+=graph[i][i]
-        s4+=graph[99-i][i]
-    print(f'#{test_case} {max(s1,max(s2),s3,s4)}')
+            y_sum[i] = y_sum[i] + graph[j][i]
+        r_sum += graph[i][i]
+        l_sum += graph[i][99-i]
+    answer = max(x_sum, max(y_sum),r_sum,l_sum)
+    print(f'#{test_case} {answer}')
