@@ -37,26 +37,45 @@ print(f)                                문자열 1개 출력하는 예제
 #sys.stdin = open("input.txt", "r")
 
 T = 10
-
 # 여러개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
 for test_case in range(1, T + 1):
     n = int(input())
-    graph = [list(map(str,input())) for _ in range(8)]
+    values = [list(input()) for _ in range(8)]
+
     answer =0
 
     for i in range(8):
         for j in range(8):
-            flag = 0
-            for k in range(n // 2):
-                if not(0<=j + k<8) or not(0<=j + n - 1 - k<8) or graph[i][j + k] != graph[i][j + n - 1 - k]:
-                    flag = 1
+            if n % 2 == 0:
+                sj,ej = j,j+1
+                cnt=0
+            else:
+                sj,ej = j-1,j+1
+                cnt=1
+            l=0
+            while(1):
+                if 0<=sj-l<8 and 0<=ej+l<8 and values[i][sj-l] == values[i][ej+l]:
+                    cnt+=2
+                    l+=1
+                else:
                     break
-            if flag == 0: answer += 1
-            flag = 0
-            for k in range(n // 2):
-                if not (0 <= j + k < 8) or not (0 <= j + n - 1 - k < 8) or graph[j + k][i] != graph[j + n - 1 - k][i]:
-                    flag = 1
+            if cnt >= n:
+                answer+=1
+        for j in range(8):
+            if n % 2 == 0:
+                sj, ej = j, j + 1
+                cnt = 0
+            else:
+                sj, ej = j - 1, j + 1
+                cnt = 1
+            l = 0
+            while (1):
+                if 0 <= sj - l < 8 and 0 <= ej + l < 8 and values[sj - l][i] == values[ej + l][i]:
+                    cnt += 2
+                    l += 1
+                else:
                     break
-            if flag == 0: answer += 1
+            if cnt >= n:
+                answer += 1
 
     print(f'#{test_case} {answer}')
