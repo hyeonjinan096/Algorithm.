@@ -39,16 +39,18 @@ print(f)                                문자열 1개 출력하는 예제
 T = 10
 # 여러개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
 for test_case in range(1, T + 1):
-    n,st =input().split()
+    n, v = input().split()
     n = int(n)
-    lst = list(st)
+    v = list(v)
     i =0
-    while(i<len(lst)-1):
-        if lst[i] == lst[i+1]:
-            lst.pop(i)
-            lst.pop(i)
-            if i-1 >=0:
+    while(i<len(v)-1):
+        if v[i] == v[i+1]:
+            v.pop(i)
+            v.pop(i)
+            if i - 1<0:
                 i-=1
-        else:
-            i+=1
-    print(f'#{test_case} {int("".join(lst))}')
+            else:
+                i-=2
+        i+=1
+    print(f'#{test_case} ',end='')
+    print(''.join(v))
