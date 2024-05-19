@@ -37,37 +37,43 @@ print(f)                                문자열 1개 출력하는 예제
 '''
 #sys.stdin = open("input.txt", "r")
 
-dr = [(1,1),(-1,-1),(1,0),(0,1),(-1,0),(0,-1),(-1,1),(1,-1)]
-
 T = int(input())
 # 여러개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
+dr = [(1,0),(-1,0),(0,1),(0,-1),(1,1),(-1,-1),(1,-1),(-1,1)]
 for test_case in range(1, T + 1):
     n,m = map(int,input().split())
     graph = [[0]*n for _ in range(n)]
-    graph[n//2-1][n//2-1] = graph[n//2][n//2] = 2
-    graph[n//2-1][n//2] = graph[n//2][n//2-1] = 1
+    graph[n//2-1][n//2-1] =graph[n//2][n//2] = 2
+    graph[n//2][n//2-1] = graph[n//2-1][n//2] = 1
 
-    for i in range(m):
+    for _ in range(m):
         x,y,d = map(int,input().split())
-        graph[x-1][y-1] = d
-        for j in range(8):
-            cx, cy = x-1, y-1
-            arr =[]
-            while(0<=cx + dr[j][0]<n and 0<=cy + dr[j][1]<n):
-                cx = cx + dr[j][0]
-                cy = cy + dr[j][1]
-                if graph[cx][cy] !=d and graph[cx][cy] != 0:
-                    arr.append((cx,cy))
-                elif graph[cx][cy] == d:
-                    for p in arr:
-                        graph[p[0]][p[1]] = d
+        x-=1
+        y-=1
+        graph[x][y] = d
+        for i in range(8):
+            nx = x+dr[i][0]
+            ny = y+dr[i][1]
+            arr=[]
+            while (0 <= nx < n and 0 <= ny < n):
+                if graph[nx][ny] != d and graph[nx][ny] != 0:
+                    arr.append((nx,ny))
+                    nx += dr[i][0]
+                    ny += dr[i][1]
+                elif graph[nx][ny] == d:
+                    for k in arr:
+                        graph[k[0]][k[1]] = d
                     break
                 else:
                     break
 
-    wc=0
-    bc=0
+
+
+    b =0
+    w = 0
     for i in graph:
-        wc+=i.count(2)
-        bc+=i.count(1)
-    print('#{} {} {}'.format(test_case,bc,wc))
+        w+=i.count(2)
+        b+=i.count(1)
+    print(f'#{test_case} {b} {w}')
+
+
