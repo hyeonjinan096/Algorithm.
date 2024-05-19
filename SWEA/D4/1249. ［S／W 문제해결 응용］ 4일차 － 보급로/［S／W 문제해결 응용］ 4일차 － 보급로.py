@@ -35,32 +35,27 @@ print(f)                                문자열 1개 출력하는 예제
 '''
 #import sys
 #sys.stdin = open("input.txt", "r")
-def dfs(cur_x,cur_y,cur_s):
-    global answer
-    visited[cur_x][cur_y] = cur_s
-    # if visited[cur_x][cur_y]<cur_s:
-    #     return
-    # else:
-    #     visited[cur_x][cur_y] = cur_s
-
-    if cur_x == cur_y == n-1:
-        answer = min(answer,cur_s)
-        return
-    for i in [(1,0),(0,1),(-1,0),(0,-1)]:
-        next_x = cur_x +i[0]
-        next_y = cur_y +i[1]
-        if 0 <= next_x < n and 0 <= next_y < n:
-            next_s =cur_s + graph[next_x][next_y]
-            if next_s < answer and next_s < visited[next_x][next_y]:
-                dfs(next_x,next_y, next_s)
-
-
+from collections import deque
 T = int(input())
 # 여러개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
+
+dx = [0,0,1,-1]
+dy = [1,-1,0,0]
+def bfs(x,y,t):
+    q = deque()
+    q.append((x,y,t))
+    while(q):
+        cx,cy,ct = q.popleft()
+        for i in range(4):
+            nx = cx+dx[i]
+            ny = cy + dy[i]
+            if 0<=nx<n and 0<=ny<n and visited[nx][ny]> graph[nx][ny]+ct:
+                visited[nx][ny] = graph[nx][ny]+ct
+                q.append((nx,ny,visited[nx][ny]))
+
 for test_case in range(1, T + 1):
     n = int(input())
-    graph = [list(map(int,list(input()))) for _ in range(n)]
-    answer=float('inf')
-    visited=[[float('inf')]*n for _ in range(n)]
-    dfs(0,0,0)
-    print(f'#{test_case} {answer}')
+    graph = [list(map(int,input())) for i in range(n)]
+    visited = [[float('INF')]*n for _ in range(n)]
+    bfs(0,0,0)
+    print(f'#{test_case} {visited[n-1][n-1]}')
