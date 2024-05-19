@@ -37,21 +37,22 @@ print(f)                                문자열 1개 출력하는 예제
 #sys.stdin = open("input.txt", "r")
 
 T = 10
+from collections import deque
 # 여러개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
 for test_case in range(1, T + 1):
     n = int(input())
-    values = list(map(int,input().split()))
-
-    i =1
+    values = deque(list(map(int,input().split())))
+    i = 1
     while(1):
-        new=values.pop(0) - i
+        if i > 5:
+            i = 1
+        new = values.popleft() -i
         if new <0:
             new =0
         values.append(new)
-        i+=1
-        if i > 5:
-            i =1
-        if new ==0:
+        if new <= 0:
             break
-    print(f'#{test_case}',end=' ')
+        i += 1
+    print(f'#{test_case}',end =' ')
     print(*values)
+
