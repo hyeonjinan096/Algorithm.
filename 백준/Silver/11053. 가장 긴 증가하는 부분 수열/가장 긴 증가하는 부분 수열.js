@@ -4,15 +4,13 @@ const fs = require("fs");
 let input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
 const n = Number(input.shift());
 let values = input[0].split(" ").map(e => Number(e));
-let max = Math.max(...values);
 
-let dp = Array.from(Array(max + 1), () => 0);
+let dp = Array.from(Array(n), () => 1);
 
-for (let i of values) {
+for (let i = 0; i < values.length; i++) {
   for (let j = 0; j < i; j++) {
-    if (dp[j] + 1 > dp[i]) dp[i] = dp[j] + 1;
+    if (values[j] < values[i]) dp[i] = Math.max(dp[i], dp[j] + 1);
   }
 }
-
 
 console.log(Math.max(...dp));
