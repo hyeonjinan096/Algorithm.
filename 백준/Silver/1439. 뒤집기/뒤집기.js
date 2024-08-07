@@ -4,14 +4,11 @@ const fs = require("fs");
 let input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
 const values = input[0].split("").map(e => Number(e));
 
-let flag = values[0];
-let o = 0;
-let z = 0;
-flag === 0 ? z++ : o++;
-for (let i = 0; i < values.length; i++) {
-  if (values[i] !== flag) {
-    flag === 0 ? o++ : z++;
-    flag === 0 ? (flag = 1) : (flag = 0);
+let cnt = 0;
+
+for (let i = 0; i < values.length - 1; i++) {
+  if (values[i] !== values[i + 1]) {
+    cnt++;
   }
 }
-console.log(Math.min(o, z));
+console.log(Math.floor((cnt + 1) / 2));
