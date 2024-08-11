@@ -55,9 +55,9 @@ let max = 0;
 for (let i = 0; i < n; i++) {
   for (let j = 0; j < m; j++) {
     if (space[i][j] === 0) {
-      space[i][j] = bfs(i, j);
-      if (max < space[i][j]) max = space[i][j];
-    };
+      let r = bfs(i, j);
+      if (max < r) max = r;
+    }
   }
 }
 
