@@ -2,15 +2,19 @@ const fs = require("fs");
 // TODO: 제출 시 경로 변환 필수 ("/dev/stdin")
 //12.31
 let input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
-input.shift();
-const set = new Set(input);
-console.log(input.length - set.size);
-const answer = [];
-input.forEach(e => {
-  if (set.has(e)) {
-    set.delete(e);
-  } else {
-    answer.push(e);
+let [n, m] = input.shift().split(" ").map(Number);
+
+let a = new Set(input.slice(0, n));
+let b = input.slice(n);
+
+let answer = [];
+
+for (let i = 0; i < m; i++) {
+  if (a.has(b[i])) {
+    answer.push(b[i]);
   }
-});
-console.log(answer.sort().join("\n"));
+}
+
+answer.sort();
+console.log(answer.length);
+console.log(answer.join("\n"));
