@@ -2,26 +2,34 @@ from math import ceil
 
 def solution(fees, records):
     answer = []
-    default_time, default_fee, unit_time, unit_fee = fees
-    parking = {}
-    using_time = {}
-    for record in records: 
-        time, number, io = record.split()
-        hour, minute = map(int, time.split(":"))
-        time = hour* 60 + minute
-        if io =="IN":
-            parking[number] = time
-        elif io =="OUT":
-            if number in using_time:
-                using_time[number] += (time - parking[number])
-            else: 
-                using_time[number] = time - parking[number]
-            del parking[number]
-    for number, time in parking.items():
-        if number in using_time:
-            using_time[number] += 1439-time
-        else: 
-            using_time[number] = 1439-time
-    for number, time in sorted(using_time.items(), key = lambda x:x[0]):
-        answer.append(default_fee + max(0,ceil((time-default_time)/unit_time))*unit_fee)
+    b_time, b_pay, p_time, p_pay = fees
+    parkings = {}
+    results = {}
+    last_time = 23*60+59
+    
+    for record in records:
+        time, car, io = record.split()
+        h, m = map(int,time.split(':'))
+        t = h* 60 + m
+        
+        if io == 'IN':
+            parkings[car] = t
+        else:
+            if car in results:
+                results[car] += t-parkings[car]
+            else:
+                results[car] = t-parkings[car]
+            del parkings[car] #확인하기
+            
+    for car, t in parkings.items():
+        if car in results:
+            results[car] += last_time - t
+        else:
+            results[car] = last_time - t
+    
+    results = sorted(results.items(), key=lambda  x:x[0])
+    
+    for car, t in results:
+        answer.append(b_pay + max(0,ceil((t-b_time)/p_time))*p_pay)
+
     return answer
