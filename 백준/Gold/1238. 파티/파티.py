@@ -1,42 +1,37 @@
+#3:15
 from collections import deque
 
 N,M,X = map(int,input().split())
-X -=1
+go = [float("inf")]*(N+1)
+back = [float("inf")]*(N+1)
+go[0],back[0] = 0,0
 dic = {}
 rev_dic = {}
-go = [float("inf")]*N
-back = [float("inf")]*N
-go[X] = 0
-back[X] = 0
 
 for _ in range(M):
-  a,b,t = map(int,input().split())
-  a-=1
-  b-=1
-  if not a in dic:
-    dic[a] = []
-  dic[a].append((b,t))
-  if not b in rev_dic:
-    rev_dic[b] = []
-  rev_dic[b].append((a,t))
+  x,y,t = map(int, input().split())
+  if x not in dic:
+    dic[x] = []
+  dic[x].append((y,t))
 
+  if y not in rev_dic:
+    rev_dic[y] = []
+  rev_dic[y].append((x,t))
+
+def bfs(x,dic,value):
+  q = deque([x])
+  value[x] = 0
   
-def bfs(s, dic, value):
-  q = deque([(s,0)])
   while(q):
-    cs, ct = q.popleft()
-    for e,t in dic[cs]:
-      if value[e] > ct+t:
-        value[e] = ct+t
-        q.append((e,ct+t))
-      
+    cx = q.popleft()
+    for y,t in dic[cx]:
+      if value[y] > value[cx]+t:
+        value[y] = value[cx]+t
+        q.append(y)
+  
 bfs(X, rev_dic, go)
 bfs(X, dic, back)
-
-answer = []
-for i in range(len(go)):
-  answer.append(go[i] + back[i])
-
-print(max(answer))
-      
-
+answer = 0
+for i in range(N+1):
+  answer = max(answer, go[i]+back[i])
+print(answer)
