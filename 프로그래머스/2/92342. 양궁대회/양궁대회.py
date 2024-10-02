@@ -1,53 +1,43 @@
 def solution(n, info):
-    global max_gap, answer
-    
     answer = [-1]
-    score = [0]*11
-    max_gap=0
+    Max = 0
+    lion = [0]*11
     
-    def is_winner_with_gap(score):
-        a=0 # 어피치 점수
-        b=0 # 라이언 점수
+    def score():
+        L, A = 0,0
+        for i in range(11):
+            if lion[i] > info[i]:
+                L +=(10-i)
+            elif lion[i] <= info[i] and info[i]!=0:
+                A+=(10-i)
+        return L>A, abs(L-A)
+    
+    def dfs(idx,n):
+        nonlocal answer,Max
         
-        for i in range(len(info)):
-            if info[i] > 0 or score[i] > 0:
-                if info[i]>=score[i]:
-                    a += (10-i)
-                else:
-                    b += (10-i)
-        return (b > a, abs(a-b))
-
-    def dfs(L, cnt):
-        global max_gap, answer
-        if L == 11 or cnt == 0:    
-            is_winner, gap = is_winner_with_gap(score)
-            if is_winner:
-                if cnt >= 0: # 화살이 남은 경우
-                    score[10] = cnt # 0점에 쏴도 이김
-                
-                if gap > max_gap: # 갭이 더 큰 경우로 업데이트
-                    max_gap = gap
-                    answer = score.copy()
-                    
-                elif gap == max_gap: # 가장 낮은 점수를 많이 맞힌 경우로 업데이트
-                    for i in range(len(score)):
-                        if answer[i] > 0:
-                            max_i_1 = i
-                        if score[i] > 0:
-                            max_i_2 = i
-                    if max_i_2 > max_i_1:
-                        answer = score.copy()
-                    
+        if n == 0 or idx == 10:
+            lionIsWinner, num = score()
+            if lionIsWinner:
+                if n>0 : 
+                    lion[-1] = n
+                if Max < num: 
+                    Max = num
+                    answer = lion[:]
+                elif Max == num:
+                    for i in range(10,-1,-1):
+                        if answer[i] < lion[i]:
+                            answer = lion[:]
+                            break
+                        elif answer[i] > lion[i]:
+                            break
+                lion[-1] = 0
             return
-        
-        # k점을 어피치보다 많이 맞추거나 아예 안맞추거나
-        if cnt>info[L]:
-            score[L]=info[L]+1
-            dfs(L+1, cnt-(info[L]+1))
-            score[L]=0
-            
-        dfs(L+1, cnt)
+        #이기는 경우
+        if n-(info[idx]+1)>=0:
+            lion[idx] = info[idx]+1
+            dfs(idx+1,n-(info[idx]+1))
+            lion[idx] = 0
+        dfs(idx+1,n)     
     
     dfs(0,n)
-    
     return answer
