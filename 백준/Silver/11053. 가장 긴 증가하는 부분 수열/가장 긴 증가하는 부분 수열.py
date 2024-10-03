@@ -1,15 +1,10 @@
-import sys
+a = int(input())
+arr = list(map(int,input().split()))
 
-n = int(sys.stdin.readline())
-arr = list(map(int, sys.stdin.readline().split()))
+dp = [1]*a
 
-dp = [1 for _ in range(n)]
-
-
-
-for i in range(len(arr)):
+for i in range(a):
   for j in range(0,i):
-    if(arr[j]<arr[i]): dp[i] = max(dp[i],dp[j]+1)
+    if arr[i] > arr[j] :  dp[i] = max(dp[i],dp[j]+1)
 
 print(max(dp))
-
