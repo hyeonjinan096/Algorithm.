@@ -1,30 +1,35 @@
-def delete_card(a,b,t):
-    for i in a:
-        if t-i in b:
-            a.remove(i)
-            b.remove(t-i)
-            return True
-    return False
-
 def solution(coin, cards):
-    answer = 1
+    Round = 0
     n = len(cards)
-    mycard = [cards[i] for i in range(n//3)]
-    index=n//3
-    nextcards=[]
+    N = n+1
+    mycard = cards[:n//3]
+    idx = n//3
     
-    while coin>=0 and index<n:
-        nextcards.append(cards[index])
-        nextcards.append(cards[index+1])
-        if delete_card(mycard,mycard, n+1):
-            pass
-        elif coin>=1 and delete_card(mycard, nextcards, n+1):
+    def check(a, b):
+        for i in a:
+            if N-i in b:
+                a.remove(i)
+                b.remove(N-i)
+                return True
+        return False
+    
+    nextcard = []
+    while(1):
+        Round+=1
+        if idx == len(cards):
+            break
+
+        for _ in range(2):
+            nextcard.append(cards[idx])
+            idx+=1
+        if check(mycard, mycard):
+            continue
+        elif coin-1>=0 and check(mycard,nextcard):
             coin-=1
-        elif coin>=2 and delete_card(nextcards, nextcards, n+1):
+        elif coin-2>=0 and check(nextcard, nextcard):
             coin-=2
         else:
-            break
-            
-        answer+=1
-        index+=2
-    return answer
+            break  
+        
+    
+    return Round
