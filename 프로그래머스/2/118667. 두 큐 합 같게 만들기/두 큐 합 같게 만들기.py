@@ -1,25 +1,24 @@
 from collections import deque
 def solution(queue1, queue2):
     answer = 0
-    queue1 = deque(queue1)
-    queue2 = deque(queue2)
-    q1_sum=sum(queue1)
-    q2_sum = sum(queue2)
-    S = (q1_sum + q2_sum) //2
-    
+    q1 = deque(queue1)
+    q2 = deque(queue2)
+    sumq1 = sum(queue1)
+    sumq2 = sum(queue2)
     
     for i in range(300000):
-        if q1_sum == S:
-            return i
-    
-        if q1_sum < S:
-            x = queue2.popleft()
-            queue1.append(x)
-            q1_sum+=x
+        if sumq1 == sumq2:
+            return answer
+        elif sumq1 > sumq2:
+            tmp = q1.popleft()
+            q2.append(tmp)
+            sumq2+=tmp
+            sumq1-=tmp
         else:
-            x= queue1.popleft()
-            queue2.append(x)
-            q1_sum-=x
-            
-    return -1
+            tmp = q2.popleft()
+            q1.append(tmp)
+            sumq1+=tmp
+            sumq2-=tmp
+        answer+=1
 
+    return -1
