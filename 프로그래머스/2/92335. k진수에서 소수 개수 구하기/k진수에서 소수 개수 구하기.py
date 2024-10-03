@@ -1,20 +1,23 @@
+import math
 def solution(n, k):
-    word = ""
-    while n:
-        word = str(n%k) + word
-        n = n//k
-    word = word.split("0")
-    
     answer = 0
-    for w in word:
-        if len(w) == 0 or int(w)<2:
+    value = ""
+    while(n):
+        value = str(n%k) + value
+        n //= k
+    
+    arr = value.split('0')
+    print(arr)
+    for a in arr:
+        if len(a) == 0 or int(a)<2:
             continue
+        v = int(a)
+        print(v)
         sosu = True
-        
-        for i in range(2, int(int(w)**0.5)+1):
-            if int(w)%i ==0:
+        for i in range(2,int(v**0.5)+1):
+            if v % i ==0:
                 sosu = False
-                break
         if sosu:
             answer+=1
+    
     return answer
