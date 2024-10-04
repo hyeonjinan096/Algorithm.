@@ -1,17 +1,35 @@
 def solution(board, skill):
-    n,m, cnt = len(board), len(board[0]),0
-    sumtable = [[0]*(m+1) for _ in range(n+1)]
-    for t, x1,y1,x2,y2, d in skill:
+    answer = 0
+    N = len(board)
+    M = len(board[0])
+    sum_board = [[0]*M for _ in range(N)]
+
+    #누적합 문제 이다.
+    for t, r1, c1, r2, c2, d in skill:
         if t == 1:
             d = -d
-        sumtable[x1][y1] +=d
-        sumtable[x2+1][y2+1] +=d
-        sumtable[x1][y2+1]-=d
-        sumtable[x2+1][y1]-=d 
-    for i in range(n+1): # 위에서 아래로
-        for j in range(m):
-            sumtable[i][j+1]+=sumtable[i][j]
-    for j in range(m+1): #왼쪽에서 오른쪽
-        for i in range(n):
-            sumtable[i+1][j]+=sumtable[i][j]
-    return sum([1 for i in range(n) for j in range(m) if board[i][j]+ sumtable[i][j]>0])
+        sum_board[r1][c1] += d
+        if c2+1<M:
+            sum_board[r1][c2+1] += -d
+        if r2+1<N:
+            sum_board[r2+1][c1] += -d
+        if c2+1<M and r2+1<N:
+            sum_board[r2+1][c2+1] += d
+
+    for i in range(1,N):
+        for j in range(M):
+            sum_board[i][j]+=sum_board[i-1][j]
+    for i in range(1,M):
+        for j in range(N):
+            sum_board[j][i]+=sum_board[j][i-1]
+        
+    for i in range(N):
+        for j in range(M):
+            board[i][j] +=sum_board[i][j]
+        
+    for b in board:
+        for i in b:
+            if i >0:
+                answer+=1
+    return answer
+
