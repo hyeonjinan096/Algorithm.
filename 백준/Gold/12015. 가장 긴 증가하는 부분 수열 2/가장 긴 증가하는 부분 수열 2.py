@@ -1,23 +1,21 @@
-
 n = int(input())
-cases = list(map(int,input().split()))
-lis = [0]
+lis = list(map(int,input().split()))
+result = [0]
 
-for case in cases:
-  if lis[-1]<case:
-    lis.append(case)
-  else:
-    left = 0
-    right = len(lis)
+def binary(idx):
+  if result[-1]< lis[idx]:
+    result.append(lis[idx])
+    return
+  l, r = 0,len(result)-1
+  while(l<=r):
+    mid = (l+r)//2
+    if result[mid] >=lis[idx]:
+      r = mid-1
+    else:
+      l = mid+1
+  result[l] = lis[idx]
 
-    while left<=right:
-      mid = (left+right)//2
-      if lis[mid]>=case:
-        right = mid -1
-      else:
-        left = mid+1
+for i in range(n):
+  binary(i)
 
-    lis[left] = case
-
-print(len(lis)-1)
-
+print(len(result)-1)
