@@ -1,33 +1,23 @@
-import sys
 from bisect import bisect_left
-
-n = int(sys.stdin.readline().strip())
-numbers = list(map(int, sys.stdin.readline().strip().split()))
-
-dp = []
-dp_idx = []
-
-for num in numbers:
-    idx = bisect_left(dp,num)
-    if idx == len(dp):
-        dp_idx.append(len(dp))
-        dp.append(num)
-        
-        continue
-    dp[idx] = min(num, dp[idx])
-    dp_idx.append(idx)
-
-idx = len(dp) - 1
-idx_num = 1000000001
-
+N = int(input())
+nums = list(map(int,input().split()))
 result = []
+idx_value = []
 
-for i in range(n - 1, -1, -1):
-    if idx == dp_idx[i] and numbers[i] < idx_num:
-        result.append(numbers[i])
-        idx -= 1
-        idx_num = numbers[i]
+for num in nums:
+  idx = bisect_left(result,num)
+  if idx == len(result):
+    result.append(num)
+  else:
+    result[idx] = num
+  idx_value.append(idx+1)
 
+order = len(result)
+answer = []
+for i in range(N-1,-1,-1):
+  if idx_value[i] == order:
+    answer.append(nums[i])
+    order-=1
 
-print(len(dp))
-print(*result[::-1])
+print(len(result))
+print(*answer[::-1])
