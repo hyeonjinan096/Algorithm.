@@ -1,24 +1,25 @@
 from collections import deque
+
 def solution(queue1, queue2):
+    #최소 작업 횟수, 없을 경우 -1
     answer = 0
+    #합이 같아져야함
     q1 = deque(queue1)
     q2 = deque(queue2)
-    sumq1 = sum(queue1)
-    sumq2 = sum(queue2)
+    sum_q1,sum_q2 = sum (q1) , sum(q2)
+    S = (sum_q1 + sum_q2)//2
     
-    for i in range(300000):
-        if sumq1 == sumq2:
+    for _ in range(300000):
+        if sum_q1 == S:
             return answer
-        elif sumq1 > sumq2:
-            tmp = q1.popleft()
-            q2.append(tmp)
-            sumq2+=tmp
-            sumq1-=tmp
-        else:
+        answer+=1
+        if sum_q1 < S:
             tmp = q2.popleft()
             q1.append(tmp)
-            sumq1+=tmp
-            sumq2-=tmp
-        answer+=1
-
+            sum_q1+=tmp
+        else:
+            tmp = q1.popleft()
+            q2.append(tmp)
+            sum_q1-=tmp
+    
     return -1
