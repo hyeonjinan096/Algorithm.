@@ -1,21 +1,25 @@
-import math
 def solution(n, k):
+    #소수 갯수
     answer = 0
-    value = ""
+    
+    #k진수로 변환하기 
+    world = ""
     while(n):
-        value = str(n%k) + value
+        world = str(n%k) + world
         n //= k
     
-    arr = value.split('0')
-    print(arr)
-    for a in arr:
-        if len(a) == 0 or int(a)<2:
+    lst = world.split('0')
+   
+    for l in lst:
+        if len (l) == 0:
+            continue    
+        num = int(l)
+        #0,1제외
+        if num < 2:
             continue
-        v = int(a)
-        print(v)
         sosu = True
-        for i in range(2,int(v**0.5)+1):
-            if v % i ==0:
+        for j in range(2, int(num**0.5)+1):
+            if num % j == 0:
                 sosu = False
         if sosu:
             answer+=1
