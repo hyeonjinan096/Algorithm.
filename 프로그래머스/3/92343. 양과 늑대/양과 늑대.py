@@ -1,25 +1,24 @@
 def solution(info, edges):
     answer = 0
-    graph = [[] for _ in range(len(info))]
-    for x,y in edges:
-        graph[x].append(y)
-    
-    def dfs(x, sheep, wolf, possible):
+    visited = [0]*len(info)
+
+    def dfs(sheep, wolf):
         nonlocal answer
         
-        if info[x] == 0:
-            sheep+=1
-            answer = max(answer,sheep)
-        else:
-            wolf+=1
-            
         if sheep <= wolf:
             return
-        possible.extend(graph[x])
- 
-        for p in possible:
-            dfs(p, sheep, wolf, [i for i in possible if i !=p])
-    
-    dfs(0,0,0,[])
+        
+        answer = max(sheep, answer)
+        for x,y in edges:
+            if visited[x] ==1 and visited[y] == 0:
+                visited[y] = 1
+                if info[y] == 0:
+                    dfs(sheep+1, wolf)
+                else:
+                    dfs(sheep, wolf+1)
+                visited[y] = 0
+                
+    visited[0] = 1        
+    dfs(1,0)
     
     return answer
