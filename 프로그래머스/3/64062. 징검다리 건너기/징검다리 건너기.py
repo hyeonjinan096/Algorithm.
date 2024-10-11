@@ -1,22 +1,20 @@
 def solution(stones, k):
     answer = 0
-    Max = max(stones)
-    s, e = 0,Max
     
-    while(s<=e):
-        m = (s+e)//2
-        cnt = 0
-        for j in stones:
-            if j-m <= 0:
-                cnt+=1
+    l, r =0, 200000000
+    
+    while(l<=r):
+        mid = (l+r)//2
+        max = 0
+        for stone in stones:
+            if stone - mid <= 0: 
+                max+=1
             else:
-                cnt =0
-            if cnt >= k:
+                max = 0
+            if max >=k:
+                r = mid-1
                 break
-        if cnt >=k:
-            e = m-1
-        if cnt < k:
-            s = m+1
-            
-                
-    return s
+        if max < k:
+            l = mid+1
+    
+    return l
