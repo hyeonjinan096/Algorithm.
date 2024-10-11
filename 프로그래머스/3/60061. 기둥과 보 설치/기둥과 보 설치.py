@@ -1,34 +1,27 @@
 def solution(n, build_frame):
-    answer = [[]]
-    build = []
+    answer = []
     
     def isOk():
-        nonlocal build
-        for x,y,a in build:
-            if a== 0:
-                if y != 0 and [x,y,1] not in build and [x-1,y,1] not in build and [x,y-1,0] not in build:
+        for x,y,a in answer:
+            if a == 0: #기둥
+                if y != 0 and [x,y,1] not in answer and [x-1,y,1] not in answer and [x,y-1,0] not in answer:
                     return False
             else:
-                if [x,y-1,0] not in build and [x+1,y-1,0] not in build and not ([x-1,y,1] in build and [x+1,y,1] in build):
+                if [x,y-1,0] not in answer and [x+1,y-1,0] not in answer and not([x-1,y,1] in answer and [x+1,y,1] in answer):
                     return False
+                
         return True
-                    
-        
     
     for x,y,a,b in build_frame:
-        if b == 1:
-            build.append([x,y,a])
+        if b == 1: #설치
+            answer.append([x,y,a])
             if not isOk():
-                build.remove([x,y,a])
-        else:
-            if [x,y,a] not in build:
-                continue
-            build.remove([x,y,a])
+                answer.remove([x,y,a])
+        else: #  삭제
+            answer.remove([x,y,a])
             if not isOk():
-                build.append([x,y,a])
-                
-    build.sort(key=lambda x:(x[0],x[1],x[2]))
+                answer.append([x,y,a])
     
+    answer.sort(key =lambda x:(x[0],x[1],x[2]))
     
-    return build
-
+    return answer
