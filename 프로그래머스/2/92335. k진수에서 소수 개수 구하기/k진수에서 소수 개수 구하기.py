@@ -1,27 +1,28 @@
 def solution(n, k):
-    #소수 갯수
     answer = 0
-    
-    #k진수로 변환하기 
-    world = ""
+    st = ''
     while(n):
-        world = str(n%k) + world
+        st = str(n%k) + st
         n //= k
+    values=st.split('0')
     
-    lst = world.split('0')
-   
-    for l in lst:
-        if len (l) == 0:
-            continue    
-        num = int(l)
-        #0,1제외
-        if num < 2:
+    def check(n):
+        for i in range(2,int(n**0.5)+1):
+            if n%i == 0:
+                return False
+        
+        return True
+    
+    for value in values:
+        if value == '':
             continue
-        sosu = True
-        for j in range(2, int(num**0.5)+1):
-            if num % j == 0:
-                sosu = False
-        if sosu:
-            answer+=1
-    
+
+        value = int(value)
+        if (value)<2:
+            continue
+        else:
+            print(value, check(value))
+            if check(value):
+                answer+=1
+
     return answer
