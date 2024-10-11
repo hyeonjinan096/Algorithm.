@@ -1,11 +1,18 @@
+# from collections import deque
+
 def solution(number, k):
-    answer = ''
-    stack = []
+    answer = []
     
-    for n in number:
-        while k>0 and stack and stack[-1]<n:
-            stack.pop()
+    for num in number:
+        while(len(answer) > 0 and k> 0 and answer[-1] < num):
+            answer.pop()
             k-=1
-        stack.append(n)
+        answer.append(num)
     
-    return ''.join(stack[:len(number)-k])
+    while(k>0):
+        answer.pop()
+        k-=1
+    
+    
+    return ''.join(answer)
+
