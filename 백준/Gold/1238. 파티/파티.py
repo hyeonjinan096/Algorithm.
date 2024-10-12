@@ -1,37 +1,34 @@
-#3:15
 from collections import deque
 
 N,M,X = map(int,input().split())
-go = [float("inf")]*(N+1)
-back = [float("inf")]*(N+1)
-go[0],back[0] = 0,0
-dic = {}
-rev_dic = {}
+graph = [[] for _ in range(N)]
+rev_graph = [[] for _ in range(N)]
+go =[float('inf')]*(N)
+back = [float('inf')]*(N)
+X-=1
+go[X] = 0
+back[X] = 0
 
 for _ in range(M):
-  x,y,t = map(int, input().split())
-  if x not in dic:
-    dic[x] = []
-  dic[x].append((y,t))
+  x,y,t = map(int,input().split())
+  x,y = x-1,y-1
+  graph[x].append((y,t))
+  rev_graph[y].append((x,t))
 
-  if y not in rev_dic:
-    rev_dic[y] = []
-  rev_dic[y].append((x,t))
-
-def bfs(x,dic,value):
-  q = deque([x])
-  value[x] = 0
-  
+def bfs(s, arr, value):
+  q = deque([(s,0)])
   while(q):
-    cx = q.popleft()
-    for y,t in dic[cx]:
-      if value[y] > value[cx]+t:
-        value[y] = value[cx]+t
-        q.append(y)
-  
-bfs(X, rev_dic, go)
-bfs(X, dic, back)
-answer = 0
-for i in range(N+1):
-  answer = max(answer, go[i]+back[i])
-print(answer)
+    nx,nt = q.popleft()
+    for x,t in arr[nx]:
+      if value[x] > nt+t:
+        value[x] = nt+t
+        q.append((x,nt+t))
+
+bfs(X,rev_graph, go)
+bfs(X,graph, back)
+
+answer = []
+for i in range(len(go)):
+  answer.append(go[i]+back[i])
+print(max(answer))
+      
