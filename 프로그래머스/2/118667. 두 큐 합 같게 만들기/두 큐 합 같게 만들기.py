@@ -1,25 +1,22 @@
 from collections import deque
 def solution(queue1, queue2):
-    answer = -1
-    q1_sum = sum(queue1)
-    same = (q1_sum+sum(queue2))//2
+    answer = 0
     q1 = deque(queue1)
     q2 = deque(queue2)
+    sum_q1 = sum(queue1)
+    same = (sum_q1 + sum(queue2))//2
     
-    cnt = 0
-    for _ in range(300000):
-        if q1_sum == same:
-            answer = cnt
-            break
-        if q1_sum < same:
+    for i in range(300000):
+        if sum_q1 == same:
+            return answer
+        answer+=1
+        if sum_q1 < same:
             new = q2.popleft()
             q1.append(new)
-            q1_sum += new
+            sum_q1+=new
         else:
             new = q1.popleft()
             q2.append(new)
-            q1_sum -= new
-        cnt+=1
+            sum_q1-=new
             
-    
-    return answer
+    return -1
