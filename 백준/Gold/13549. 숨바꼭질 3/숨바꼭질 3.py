@@ -1,29 +1,25 @@
 from collections import deque
+N, K = map(int, input().split())
+Max = 100001
+values = [float("inf")]*Max
 
-N, K = map(int,input().split())
-visited = [float('inf')]* 100001
-def bfs():
-  q = deque([K])
-  visited[K] = 0
+def bfs(start, end):
+  q = deque([start])
+  values[start] = 0
 
   while(q):
-    x = q.popleft()
-    cost = visited[x]
-    if x == N:
-      return cost
+    e = q.popleft()
+    time = values[e]
+
+    if e == end:
+      return time
     
-    if 0<=x-1<=100000 and cost+1 < visited[x-1]:
-      q.append(x-1)
-      visited[x-1] =cost +1
-    if 0<=x+1<=100000 and cost+1 <  visited[x+1]:
-      q.append(x+1)
-      visited[x+1] = cost +1
-    if x%2 == 0 and 0<=x//2<=100000 and cost < visited[x//2]:
-      q.append(x//2) 
-      visited[x//2] = cost 
-
-print(bfs())
-
-
-# bfs visited 위치 
-# visited 체크 
+    for idx in [e-1,e+1]:
+      if 0<=idx<Max and values[idx]>time+1:
+        values[idx] = time+1
+        q.append(idx)
+    if 0<=e*2<Max and values[e*2]>time:
+      values[e*2] = time
+      q.append(e*2)
+  
+print(bfs(N,K))
