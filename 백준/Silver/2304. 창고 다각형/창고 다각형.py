@@ -1,32 +1,22 @@
-N = int(input())
-lst = []
-max_l, max_h = 0,0
-for _ in range(N):
-  l,h = map(int,input().split())
-  lst.append([l,h])
-  if max_h < h:
-    max_h, max_l = h,l
+import sys
+input = sys.stdin.readline
 
-lst.sort(key=lambda x:x[0])
-max_i = lst.index([max_l,max_h])
-
-answer = max_h
-
-std_h = lst[0][1]
-for i in range(0,max_i):
-  cur_l, cur_h = lst[i]
-  if cur_h > std_h:
-    std_h = cur_h
-  answer+=(lst[i+1][0]-lst[i][0])*std_h
-
-std_h = lst[-1][1]
-for i in range(N-1,max_i,-1):
-  cur_l, cur_h = lst[i]
-  if cur_h > std_h:
-    std_h = cur_h
-  answer+=(lst[i][0]-lst[i-1][0])*std_h
-
+m = 0
+m_idx = 0
+pli = [0 for _ in range(1001)] # 기둥
+for _ in range(int(input())):
+    L,H = map(int,input().split())
+    pli[L] = H
+    if m < H: # 가장 높은 기둥과 그 기둥의 인덱스를 찾음
+        m_idx = L
+        m = H
+curr = 0
+answer = 0
+for i in range(m_idx+1): # 왼쪽 그룹
+    curr = max(curr,pli[i])
+    answer += curr
+curr = 0
+for i in range(1000,m_idx,-1): # 오른쪽 그룹
+    curr = max(curr,pli[i])
+    answer += curr
 print(answer)
-
-
-
