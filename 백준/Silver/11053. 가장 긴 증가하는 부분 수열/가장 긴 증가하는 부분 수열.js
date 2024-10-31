@@ -1,16 +1,17 @@
-const fs = require("fs");
-// TODO: 제출 시 경로 변환 필수 ("/dev/stdin")
-//6.53
-let input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
-const n = Number(input.shift());
-let values = input[0].split(" ").map(e => Number(e));
+const fs = require('fs')
+const input = fs.readFileSync('/dev/stdin','utf8').trim().split('\n')
 
-let dp = Array.from(Array(n), () => 1);
+const N = Number(input.shift())
+const values = input[0].trim().split(' ').map(Number)
 
-for (let i = 0; i < values.length; i++) {
-  for (let j = 0; j < i; j++) {
-    if (values[j] < values[i]) dp[i] = Math.max(dp[i], dp[j] + 1);
-  }
+const dp = new Array(N).fill(1)
+
+for(let i=0;i<N;i++){
+    for(let j=0;j<i;j++){
+        if (values[i] > values[j]){
+            dp[i] = Math.max(dp[i],dp[j]+1)
+        }
+    }
 }
 
-console.log(Math.max(...dp));
+console.log(Math.max(...dp))
