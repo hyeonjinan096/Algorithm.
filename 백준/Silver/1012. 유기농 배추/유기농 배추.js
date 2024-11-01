@@ -33,11 +33,22 @@ for (let i = 0;i<T;i++){
         }
     }
 
+    function dfs(x,y){
+        graph[x][y] = 2
+        for (let [dx,dy] of dir){
+            let nx = x+dx
+            let ny = y+dy
+            if (nx>=0 && nx<N && ny>=0 && ny<M && graph[nx][ny] ===1){
+                dfs(nx,ny)
+            }
+        }
+    }
+
     //for문 돌면서 1인 공 방문하고 거기서 퍼지는 거 확인하기 위해 bfs 돌리기
     for (let i=0;i<N;i++){
         for (let j =0;j<M;j++){
             if (graph[i][j] === 1){
-                bfs(i,j)
+                dfs(i,j)
                 answer++
             }
         }
