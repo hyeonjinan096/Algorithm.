@@ -7,18 +7,17 @@ nums.sort()
 for i in range(n):
   target = nums[i]
   tmp_nums = nums[:i] + nums[i+1:]
-  
-  l, r = 0,n-2
-  while(l<r):
-    num = tmp_nums[l] + tmp_nums[r] 
+
+  start, end = 0,n-2
+  while(start<end):
+    num = tmp_nums[start] + tmp_nums[end]
     if num == target:
       answer+=1
       break
-    elif num>target:
-      r -=1
+    elif num > target:
+      end-=1
     else:
-      l +=1
+      start+=1
 
 print(answer)
-
-
+    
