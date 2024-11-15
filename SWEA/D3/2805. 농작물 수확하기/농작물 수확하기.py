@@ -4,21 +4,17 @@ for test_case in range(1, T + 1):
     N = int(input())
     graph = [list(map(int,list(input()))) for _ in range(N)]
 
-    answer = 0
-    start = N//2
-    end = N//2+1 
-    for i in range(N//2):
-      answer += sum(graph[i][start:end])
-      start-=1
-      end+=1
-    start = N//2
-    end = N//2+1
-    for i in range(N-1,N//2,-1):
-      answer += sum(graph[i][start:end])
-      start-=1
-      end+=1
+    mid = N//2
+    answer = sum(graph[mid])
     
-    answer += sum(graph[N//2])
+    x = 0
+    y = N-1
+
+    for i in range(mid):
+        answer +=sum(graph[x][mid-i:mid+i+1])
+        answer +=sum(graph[y][mid-i:mid+i+1])
+        x+=1
+        y-=1
+
     print(f'#{test_case} {answer}')
-
-
+    
