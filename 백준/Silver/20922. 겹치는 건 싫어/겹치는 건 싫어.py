@@ -1,27 +1,22 @@
+#12:13 18
+#시간초과
 import sys
 
-N,K = map(int,sys.stdin.readline().split(' '))
+N,M = map(int,sys.stdin.readline().split())
+values = list(map(int,sys.stdin.readline().split()))
+
 dp = [0]*200001
-values = list(map(int,sys.stdin.readline().split(' ')))
-last_check = 0
+
+end = 0
 answer = 0
-len = 0
-
-for i in range(0,N):
-  if i-1 > -1:
+for i in range(N):
+  if i > 0:
     dp[values[i-1]]-=1
-    len-=1
-
-  for j in range(last_check,N):
-    last_check = j
-    if dp[values[j]]+1 > K:
+  for j in range(end, N):
+    end = j
+    if dp[values[j]]+1>M:
       break
     dp[values[j]]+=1
-    len+=1
-  answer = max(len, answer)
+    answer = max(answer, j-i+1)
 
 print(answer)
-
-
-
-
