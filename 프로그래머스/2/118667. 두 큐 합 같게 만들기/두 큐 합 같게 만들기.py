@@ -1,22 +1,22 @@
 from collections import deque
 def solution(queue1, queue2):
-    answer = 0
+    answer = -1
+    q1_sum = sum(queue1)
+    mid_sum = (q1_sum + sum(queue2))//2
     q1 = deque(queue1)
     q2 = deque(queue2)
-    sum_q1 = sum(queue1)
-    same = (sum_q1 + sum(queue2))//2
     
-    for i in range(300000):
-        if sum_q1 == same:
-            return answer
-        answer+=1
-        if sum_q1 < same:
-            new = q2.popleft()
-            q1.append(new)
-            sum_q1+=new
+    for i in range(300001):
+        if q1_sum == mid_sum:
+            answer = i
+            break
+        elif q1_sum < mid_sum:
+            tmp = q2.popleft()
+            q1.append(tmp)
+            q1_sum+=tmp
         else:
-            new = q1.popleft()
-            q2.append(new)
-            sum_q1-=new
-            
-    return -1
+            tmp = q1.popleft()
+            q2.append(tmp)
+            q1_sum-=tmp
+    
+    return answer
