@@ -8,9 +8,9 @@ lst += lst
 
 select_lst = deque(lst[:k])
 
-max = len(set(select_lst))
-if c in select_lst:
-    max-=1
+tmp = set(select_lst)
+tmp.add(c)
+max = len(tmp)
 
 
 for i in range(0,N):
@@ -18,11 +18,10 @@ for i in range(0,N):
         break
     select_lst.popleft()
     select_lst += [lst[i+k]]
-    length = len(set(select_lst))
-    if c in select_lst:
-        length-=1
-    if length > max:
-        max = length
+    tmp = set(select_lst)
+    tmp.add(c)
+    if len(tmp) > max:
+        max = len(tmp)
 
-print(max + 1)
+print(max)
 
