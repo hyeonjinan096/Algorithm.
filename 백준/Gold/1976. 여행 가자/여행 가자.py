@@ -1,38 +1,33 @@
-from collections import deque
+# 유니온 파인드 함수 정의
+def find(parent, x):
+    if parent[x] != x:
+        parent[x] = find(parent, parent[x])  # 경로 압축
+    return parent[x]
 
+def union(parent, x, y):
+    root_x = find(parent, x)
+    root_y = find(parent, y)
+    if root_x != root_y:
+        parent[root_y] = root_x
+
+# 입력 처리
 N = int(input())
 M = int(input())
-graph = [[] for _ in range(N)]
+graph = [list(map(int, input().split())) for _ in range(N)]
+travel_route = list(map(int, input().split()))
 
-# 그래프 입력 처리
+# 유니온 파인드 초기화
+parent = [i for i in range(N)]
+
+# 그래프를 기반으로 연결된 도시들을 병합
 for i in range(N):
-    lst = list(map(int, input().split()))
     for j in range(N):
-        if lst[j] == 1:
-            graph[i].append(j)
+        if graph[i][j] == 1:
+            union(parent, i, j)
 
-# 여행 경로 입력 처리
-travel_route = [x - 1 for x in map(int, input().split())]
-
-visited = [0] * N
-
-def bfs(start):
-    q = deque([start])
-    visited[start] = 1
-
-    while q:
-        cur_x = q.popleft()
-        for next_x in graph[cur_x]:
-            if not visited[next_x]:
-                visited[next_x] = 1
-                q.append(next_x)
-
-# 여행 경로 확인
-# BFS를 수행하여 첫 번째 여행 경로에서 연결된 모든 노드를 방문
-bfs(travel_route[0])
-
-# 방문한 노드들 중에서 여행 경로에 포함되지 않은 노드가 있는지 확인
-if all(visited[city] for city in travel_route):
+# 여행 경로의 모든 도시가 같은 집합인지 확인
+root = find(parent, travel_route[0] - 1)  # 첫 번째 도시의 루트
+if all(find(parent, city - 1) == root for city in travel_route):
     print("YES")
 else:
     print("NO")
