@@ -1,23 +1,19 @@
-from collections import deque
-
 T = int(input())
 for _ in range(T):
-    W = list(input())
+    words = list(input())
     K = int(input())
-    Min = float('inf')
+    words_dict = {}
     Max = 0
-    char_dict = {}
+    Min = float('inf')
 
-    for idx, val in enumerate(W):
-        if val not in char_dict:
-            char_dict[val] = deque([])
-        char_dict[val].append(idx)
-
-        if len(char_dict[val]) == K:
-            L = idx - char_dict[val][0] + 1
-            Min = min(L, Min)
-            Max = max(L, Max)
-            char_dict[val].popleft()
+    for idx, word in enumerate(words):
+        if word not in words_dict:
+            words_dict[word] = []
+        words_dict[word].append(idx)
+        if len(words_dict[word]) == K:
+             L = idx - words_dict[word].pop(0)+ 1
+             Min = min(Min,L)
+             Max = max(Max,L)
 
     if Min == float('inf') and Max == 0:
         print(-1)
