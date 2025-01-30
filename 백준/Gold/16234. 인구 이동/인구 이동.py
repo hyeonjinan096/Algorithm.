@@ -1,54 +1,44 @@
-from collections import deque
-
-N,L,R = map(int,input().split())
-graph = [list(map(int,input().split())) for _ in range(N)]
-cnt = -1
-
-dr = [[1,0],[0,1],[-1,0],[0,-1]]
-
-def bfs(x,y,k):
-    visited[x][y] = k
-    lst = [graph[x][y]]
-    q = deque([[x,y]])
-
-    while(q):
-        cx, cy = q.popleft()
-        for dx,dy in dr:
-            nx, ny = cx + dx, cy + dy
-            if 0 <= nx < N and 0 <= ny < N:
-                if not visited[nx][ny] and L <= abs(graph[cx][cy] - graph[nx][ny]) <= R:
-                    lst.append(graph[nx][ny])
-                    visited[nx][ny] = k
-                    q.append([nx,ny])
-
-    if len(lst) == 1:
-        return graph[x][y]
-    else:
-        return sum(lst) // len(lst)
-
-
-while(1):
-    cnt+=1
-    k = 1
-    sum_dict = {}
+import sys
+from collections import deque 
+N, L, R = map(int, sys.stdin.readline().split())
+pan = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
+# 연합이 될 수 있는지?를 확인하고 만약 된다면 하나로 묶어 인구수/칸의 개수를 구하고 각 칸에 값을 넣는다.
+# 이를 연합이 될 수 없을 때까지 반복한다.
+# 그 때 소요된 날짜를 출력한다.
+q = deque()
+dx = [1,0,-1,0]
+dy = [0,1,0,-1]
+def bfs(x,y):
+    q.append((x,y))
+    union = []
+    union.append((x,y))
+    while q:
+        a,b = q.popleft()
+        for i in range(4):
+            na = a + dx[i]
+            nb = b + dy[i]
+            if na>=N or nb>=N or nb<0 or na<0 or visited[na][nb]==1:
+                continue
+            if R>=abs(pan[a][b]-pan[na][nb])>=L:
+                visited[na][nb] = 1
+                q.append((na,nb))
+                union.append((na,nb))
+    if len(union)<=1:
+        return 0
+    result=sum(pan[a][b] for a,b in union)//len(union)
+    for a,b in union:
+        pan[a][b] = result
+    return 1
+day = 0
+while 1:
+    stop = 0
     visited = [[0]*N for _ in range(N)]
     for i in range(N):
         for j in range(N):
-            if not visited[i][j]:
-                sum_dict[k] = bfs(i,j,k)
-                k+=1
-
-    if k == N*N + 1:
+            if visited[i][j] == 0:
+                visited[i][j] = 1
+                stop += bfs(i,j)
+    if stop==0:
         break
-
-    for i in range(N):
-        for j in range(N):
-            graph[i][j] = sum_dict[visited[i][j]]
-
-print(cnt)
-
-
-
-
-
-
+    day += 1
+print(day)
