@@ -1,22 +1,21 @@
 N,S = map(int,input().split())
-values = list(map(int,input().split()))
+lst = list(map(int,input().split()))
 
-right, left = 0, 0
+l,r = 0,0
+Min = float('inf')
 Sum = 0
-min_sum = float('inf')
-
 while(1):
     if Sum >= S:
-        min_sum= min(min_sum, right-left)
-        Sum -= values[left]
-        left+=1
-        continue
-    if right == N:
+        Min = min(r-l, Min)
+        Sum -= lst[l]
+        l+=1
+    elif r >= N:
         break
-    if Sum < S:
-        Sum += values[right]
-        right += 1
+    else:
+        Sum += lst[r]
+        r+=1
 
-if min_sum == float('inf'): print(0)
+if Min == float('inf'):
+    print(0)
 else:
-    print(min_sum)
+    print(Min)
