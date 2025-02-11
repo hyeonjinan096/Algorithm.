@@ -8,10 +8,7 @@ def turn(i,d):
     else:
         new_lst = lst[i][1:] + [lst[i][0]]
 
-    if d == 1:
-        rev_d = -1
-    else:
-        rev_d = 1
+    rev_d = -d
 
     if i-1 >= 0 and not visited[i-1] and lst[i][6] != lst[i-1][2]:
         visited[i-1] = 1
@@ -22,8 +19,6 @@ def turn(i,d):
         turn(i+1, rev_d)
 
     lst[i] = new_lst
-
-
 
 
 for n,d in turns:
