@@ -1,19 +1,22 @@
-N = int(input())
-parent_list = list(map(int, input().split()))
-child_list = [list() for _ in range(N)]
+n = int(input())
+lst = list(map(int, input().split()))
 
-for child in range(1, N) :
-  parent = parent_list[child]
-  child_list[parent].append(child)
+tree = [[] for _ in range(n)]
+for i in range(n):
+    if lst[i] != -1:
+        tree[lst[i]].append(i)
 
-def dfs(node) :
-  if not child_list[node] :
-    return 0
-  result = list()
-  for child in child_list[node] :
-    result.append(dfs(child))
-  result.sort( reverse = True)
-  result = [ result[i] + i + 1 for i in range(len(child_list[node])) ]
-  return max(result)
+def dfs(node):
+    times = []
+    for child in tree[node]:
+        times.append(dfs(child))
+    times.sort(reverse=True)  # 시간이 큰 순서대로 전파
 
-print(dfs(0))
+    max_time = 0
+    for idx, t in enumerate(times):
+        max_time = max(max_time, t + idx + 1)  # 전파 순서 +1초
+
+    return max_time
+
+root = lst.index(-1)
+print(dfs(root))
