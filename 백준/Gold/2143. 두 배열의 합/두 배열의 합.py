@@ -1,28 +1,33 @@
-import sys
-from bisect import bisect_left, bisect_right
-input = sys.stdin.readline
-
 T = int(input())
-n = int(input())
-a = list(map(int,input().split()))
-m = int(input())
-b = list(map(int,input().split()))
+a = int(input())
+lst_a = list(map(int,input().split()))
+b = int(input())
+lst_b = list(map(int,input().split()))
 
-a_sum = []
-for i in range(n):
-    for j in range(i,n):
-        a_sum.append(sum(a[i:j+1]))
 
-b_sum = []
-for i in range(m):
-    for j in range(i,m):
-        b_sum.append(sum(b[i:j+1]))
+dic_a = {}
+for i in range(a):
+    sum = 0
+    for j in range(i,-1,-1):
+        sum+= lst_a[j]
+        if sum not in dic_a:
+            dic_a[sum] = 0
+        dic_a[sum] += 1
 
-a_sum.sort()
-b_sum.sort()
+dic_b = {}
+for i in range(b):
+    sum = 0
+    for j in range(i,-1,-1):
+        sum+= lst_b[j]
+        if sum not in dic_b:
+            dic_b[sum] = 0
+        dic_b[sum] += 1
 
-answer= 0
-for a in a_sum:
-    answer += bisect_right(b_sum, T-a) - bisect_left(b_sum, T-a)
+
+answer = 0
+for key,value in dic_a.items():
+    if T-key in dic_b:
+        answer += (dic_b[T-key] * value)
 
 print(answer)
+        
