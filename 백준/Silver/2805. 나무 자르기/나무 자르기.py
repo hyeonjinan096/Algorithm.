@@ -1,25 +1,28 @@
 import sys
 
-n,m = map(int,sys.stdin.readline().split())
-arr = list(map(int,sys.stdin.readline().split()))
+input = sys.stdin.readline
 
-arr.sort()
+N, M = map(int,input().split())
+tree = list(map(int,input().split()))
 
-sum = 0
-s,e =0,max(arr)
 
-while(s<=e):
-    M = (s+e)//2
-    sum = 0
-    for i in arr:
-        if(i>M):
-            sum+=(i-M)
-    if(sum>=m):
-        s=M+1
+right = max(tree) 
+left = 0
+result = 0
+
+while(left <= right):
+    mid = (left + right)//2
+    Sum = 0
+    for i in tree:
+      if i > mid:
+        Sum += i - mid
+
+    if Sum >= M:
+      result = mid
+      left = mid +1
     else:
-        e=M-1
-print(e)
+      right = mid -1
+      
+
+print(result)  
     
-
-
-
