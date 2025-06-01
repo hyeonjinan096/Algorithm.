@@ -1,23 +1,16 @@
-import sys
+N,M = map(int,input().split())
+lst = list(map(int,input().split()))
 
-n, m = map(int, sys.stdin.readline().split())
+left = 0
+Sum = 0
+cnt = 0
 
-arr = list(map(int, sys.stdin.readline().split()))
-left, right = 0, 1
+for right in range(N):
+  Sum += lst[right]
+  while(Sum > M):
+    Sum -= lst[left]
+    left+=1
+  if Sum == M:
+    cnt+=1
 
-count = 0
-
-while (left <= right and right <= n):
-    total = sum(arr[left:right])
-    if (total < m):
-        right += 1
-
-    elif (total > m):
-        left += 1
-
-    else:
-        count += 1
-        right += 1
-
-print(count)
-
+print(cnt)
