@@ -1,13 +1,16 @@
 from bisect import bisect_left
+
 N = int(input())
-nums = list(map(int,input().split()))
-result = []
 
-for num in nums:
-  idx = bisect_left(result,num)
-  if idx == len(result):
-    result.append(num)
-  else:
-    result[idx] = num
+lst = map(int,input().split())
+tmp_lst = []
 
-print(len(result))
+
+for l in lst:
+    idx = bisect_left(tmp_lst, l)
+    if idx == len(tmp_lst):
+        tmp_lst.append(l)
+    else:
+        tmp_lst[idx] = l
+
+print(len(tmp_lst))
