@@ -1,24 +1,17 @@
+N = int(input())
+work = []
 
-import sys
+for _ in range(N):
+  t,p = map(int,input().split())
+  work.append([t,p])
 
+dp = [0]*(N+1)
 
-N = int(sys.stdin.readline())
-li = [list(map(int,sys.stdin.readline().strip().split())) for _ in range(N)]
+for i in range(N):
+  t = work[i][0]
+  p = work[i][1]
+  if(i+t-1 < N):
+    for j in range(N,i+t-1,-1):
+        dp[j] = max(dp[j],dp[i] + p)
 
-s =[0]
-for i in range(N-1,-1,-1):
-    S = li[i][0]
-    M = li[i][1]
-    MAX = M
-    if(i+S-1)>=N:
-        li[i][1] = -1
-        continue
-    for j in range(i+S,N):
-        if(li[j][1] != -1 ):
-            MAX = max(MAX, M + li[j][1])
-            
-    li[i][1] = MAX
-    s.append(li[i][1])
-
-
-print(max(s))
+print(dp[N])
