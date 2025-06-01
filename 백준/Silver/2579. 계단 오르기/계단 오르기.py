@@ -1,21 +1,19 @@
-import sys
-input = sys.stdin.readline
-arr =[]
-dp = []
+#한개, 두개
+#연속 세개 안됨
+#최대 총점
 
+N = int(input())
+lst = [int(input()) for _ in range(N)]
 
-l = int(input())
-for _ in range(l):
-    arr.append(int(input()))
+dp = [0]*N
+dp[0] = lst[0]
 
-if(l<=2):
-    print(sum(arr))
+for i in range(1,N):
+    if i == 1:
+       dp[1] = lst[1] + lst[0]
+    elif i == 2:
+      dp[i] = max(lst[i-2], lst[i-1]) + lst[i]
+    else:    
+      dp[i] = max(dp[i-2] + lst[i], dp[i-3] + lst[i-1] + lst[i])
 
-else:
-    dp.append(arr[0])
-    dp.append(max(arr[0]+arr[1],arr[1]))
-    dp.append(max(arr[0]+arr[2],arr[1]+arr[2]))
-    for i in range(3,l):
-        dp.append(max(dp[i-2]+arr[i],dp[i-3]+arr[i-1]+arr[i]))
-    print(dp.pop())
-
+print(dp[N-1])
